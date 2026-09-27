@@ -1,0 +1,703 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    color: #333;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #2c3e50;
+    font-size: 24px;
+}
+
+header p {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.form-section {
+    margin-bottom: 25px;
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.input-group {
+    margin-bottom: 12px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn-add {
+    width: 100%;
+    padding: 10px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-add:hover {
+    background-color: #219653;
+}
+
+.error-message {
+    color: #c0392b;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.summary-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #34495e;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+table th {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+
+.grand-total {
+    text-align: right;
+    background: #e8f8f5;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #a3e4d7;
+}
+
+.grand-total h3 {
+    color: #16a085;
+    font-size: 20px;
+}
+
+/* นำโค้ด CSS ของเดิมทั้งหมดมาไว้ที่นี่ และเพิ่ม/ปรับปรุงส่วนด้านล่างนี้เข้าไป */
+
+.scanner-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+/* อัปเดต .product-card เดิม */
+.product-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.1s, box-shadow 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* จัดให้อยู่กึ่งกลางเพราะไม่มีปุ่มแล้ว */
+    cursor: pointer;
+    /* เปลี่ยนเมาส์เป็นรูปมือ */
+    user-select: none;
+    /* ป้องกันการเผลอลากคลุมข้อความเวลาคลิกรัวๆ */
+}
+
+/* เพิ่มสีขอบตอนนำเมาส์ไปชี้ */
+.product-card:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+}
+
+/* เอฟเฟกต์ตอนกดคลิก (ให้ดูเหมือนปุ่มถูกกดลงไป) */
+.product-card:active:not(.disabled) {
+    transform: scale(0.96);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* สไตล์สำหรับตอนที่สินค้าหมดสต็อก */
+.product-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f9fafb;
+    border-color: var(--border);
+}
+
+/* สามารถลบชุดคำสั่ง .btn-scan, .btn-scan:hover, .btn-scan:active, .btn-scan:disabled ของเดิมออกได้เลย */
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.product-price {
+    color: var(--primary);
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.product-stock {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.product-stock.low {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+/* ส่วน Receipt และตัวแปรสีต่างๆ ให้คงไว้ตามเวอร์ชัน Pro เดิมครับ */
+
+/* ปุ่มชำระเงิน */
+.btn-checkout {
+    margin-top: 16px;
+    font-size: 18px;
+    padding: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-checkout:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Modal Styles */
+/* --- A4 Receipt Modal Styles (Compact) --- */
+/* 1. ปรับ Modal ให้อยู่ชิดบน (flex-start) ป้องกันหัวใบเสร็จถูกตัดหากรายการเยอะ */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* เปลี่ยนจาก center เป็น flex-start */
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+/* 2. บังคับความสูงขั้นต่ำให้ใบเสร็จยืดเต็มจอ (min-height) */
+.a4-receipt {
+    background-color: white;
+    width: 100%;
+    max-width: 700px;
+    padding: 25px;
+    border-radius: 8px;
+    color: #333;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    font-size: 13px;
+    min-height: 90vh;
+    /* บังคับให้หน้ากระดาษยืดเกือบเต็มจอเสมอ */
+    display: flex;
+    flex-direction: column;
+}
+
+.a4-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.a4-title h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #333;
+    letter-spacing: -1px;
+    margin-bottom: -2px;
+}
+
+.a4-title h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #555;
+}
+
+.logo-placeholder {
+    text-align: center;
+}
+
+.teal-line {
+    border: 0;
+    border-top: 2px solid #a5d6d3;
+    margin: 10px 0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.info-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    margin-bottom: 4px;
+}
+
+.info-row .label {
+    color: #555;
+}
+
+.info-row .value {
+    color: #111;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+/* 3. ทำให้กล่องตาราง (table-wrapper) ยืดเติมเต็มพื้นที่ว่างที่เหลือ */
+.table-wrapper {
+    border: 2px solid #a5d6d3;
+    border-radius: 8px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    /* โค้ดสำคัญ! สั่งให้ยืดเต็มพื้นที่ของ a4-receipt */
+    overflow: hidden;
+}
+
+.a4-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.a4-table th {
+    background-color: #f8fcfc;
+    padding: 8px;
+    font-weight: 600;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #a5d6d3;
+}
+
+.a4-table td {
+    padding: 8px;
+    text-align: center;
+}
+
+.a4-table td.text-left {
+    text-align: left;
+}
+
+.a4-table td.text-right {
+    text-align: right;
+}
+
+/* 4. ดันส่วนสรุปยอด (summary-wrapper) ให้ไปติดขอบล่างสุดของตารางเสมอ */
+.summary-wrapper {
+    display: flex;
+    border-top: 1px solid #a5d6d3;
+    padding: 12px 15px;
+    margin-top: auto;
+    /* โค้ดสำคัญ! ดันตัวเองลงไปล่างสุดโดยอัตโนมัติ */
+}
+
+.remark-section {
+    flex: 1;
+}
+
+.calc-section {
+    width: 250px;
+}
+
+.calc-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.calc-row span:last-child {
+    font-weight: bold;
+}
+
+.grand-total-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8fcfc;
+    padding: 15px;
+    border-top: 2px solid #a5d6d3;
+}
+
+.grand-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.grand-amount {
+    text-align: right;
+}
+
+.grand-amount .number {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.grand-amount .text {
+    color: #555;
+    font-size: 14px;
+}
+
+.footer-grid {
+    margin-top: 15px;
+}
+
+.payment-methods strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.payment-options {
+    display: flex;
+    gap: 15px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radio-label input {
+    margin-right: 5px;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* 5. ปรับสำหรับการสั่งปริ้น (Print) ให้ยืดเต็มหน้ากระดาษ A4 พอดี */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #receiptModal,
+    #receiptModal * {
+        visibility: visible;
+    }
+
+    #receiptModal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 0;
+        background: transparent;
+        align-items: flex-start;
+        overflow: visible;
+    }
+
+    .a4-receipt {
+        box-shadow: none;
+        max-width: 100%;
+        padding: 0;
+        min-height: 99vh;
+        /* ยืดความสูงให้เต็ม 1 หน้ากระดาษพอดี */
+    }
+
+    .hide-on-print {
+        display: none !important;
+    }
+}
+/* =========================================================
+   ส่วนที่เพิ่มหลังการประเมิน (ใบงานที่ 6)
+   - นิยามตัวแปรสี (:root) ที่ส่วนอื่นเรียกใช้แต่ยังไม่เคยประกาศ
+   - จัด Layout 2 คอลัมน์: ซ้าย = สินค้า, ขวา = ตะกร้า
+   - ปุ่ม / กล่องแจ้งเตือน / ป้ายสต็อกใกล้หมด ใช้สีชี้นำการใช้งาน
+   ========================================================= */
+:root {
+    --primary: #0f766e;
+    --primary-dark: #115e59;
+    --primary-soft: #e6f4f1;
+    --danger: #dc2626;
+    --danger-soft: #fef2f2;
+    --warning: #d97706;
+    --border: #e5e7eb;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --bg: #f4f7f6;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-main);
+}
+
+.pos-container {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+.sys-header {
+    text-align: left;
+    background: var(--primary);
+    color: #fff;
+    padding: 18px 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.sys-header h1 {
+    color: #fff;
+    font-size: 26px;
+}
+
+.sys-header p {
+    color: #ccfbf1;
+    font-size: 14px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.card h2,
+.receipt-section h2 {
+    font-size: 18px;
+    color: var(--text-main);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.alert {
+    margin-top: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: var(--danger-soft);
+    border: 1px solid #fecaca;
+    color: var(--danger);
+    font-weight: 600;
+}
+
+.alert.info {
+    background: #fffbeb;
+    border-color: #fde68a;
+    color: #92400e;
+}
+
+.product-stock.low {
+    color: var(--warning);
+    font-weight: 700;
+}
+
+.product-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f9fafb;
+}
+
+.product-card.disabled .product-stock {
+    color: var(--danger);
+    font-weight: 700;
+}
+
+/* ฝั่งตะกร้า (ติดขอบบนเวลาเลื่อนหน้า) */
+.receipt-section {
+    position: sticky;
+    top: 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.receipt-paper {
+    margin-top: 12px;
+}
+
+.receipt-table th,
+.receipt-table td {
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 6px;
+    text-align: left;
+}
+
+.receipt-table th {
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+}
+
+.text-right,
+.receipt-table .text-right {
+    text-align: right;
+}
+
+.receipt-summary .grand-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    background: var(--primary-soft);
+    border-color: #99d5ca;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    background: #d1d5db;
+}
+
+.btn-checkout {
+    width: 100%;
+}
+
+.btn-icon {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 6px;
+    background: var(--danger-soft);
+    color: var(--danger);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.btn-icon:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+/* จอเล็ก (แท็บเล็ตแนวตั้ง / มือถือ) ให้ตะกร้าลงไปอยู่ด้านล่าง */
+@media (max-width: 900px) {
+    .pos-container {
+        grid-template-columns: 1fr;
+    }
+
+    .receipt-section {
+        position: static;
+    }
+}
+
+@media print {
+    .pos-container {
+        display: none;
+    }
+}
