@@ -1,5 +1,3 @@
-// ทดสอบตรรกะการคำนวณ (ไม่ต้องใช้เบราว์เซอร์/ฐานข้อมูล)
-// วิธีรัน: เปิด Terminal ที่โฟลเดอร์โปรเจกต์ แล้วพิมพ์  node tests/test_logic.mjs
 import { ThaiBahtText } from '../js/utils.js';
 import { CartSystem } from '../js/cart.js';
 
